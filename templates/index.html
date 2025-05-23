@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2> Home page</h2>
+<p>Welcome to the home page!</p>
+<p>Here you can find various resources and information.</p>
+
+<h1>{{name}}</h1>
+<img src="/static/Pro1.jpg" alt="Image">
+
+<from action="" method="post"><br>
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="email">Email:</label><br>   
+    <input type="email" id="email" name="email"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br>
+    <input type="submit" value="Submit">
+</from>
+
+{%endblock %}

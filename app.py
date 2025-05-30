@@ -63,7 +63,7 @@ def education_requirements():
     return graph8_html
 
 def breakdown_by_education():
-    fig = px.bar(df, x='Seniority level', y='education', title='Breakdown of Education within Seniority Levels')
+    fig = px.box(df, x='Seniority level', y='education', title='Breakdown of Education within Seniority Levels')
     graph9_html = pio.to_html(fig, full_html=False)
     return graph9_html
 

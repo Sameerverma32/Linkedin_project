@@ -1,22 +1,865 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %}
 {% block content %}
+<!-- New Navbar -->
 
-<h2> Home page</h2>
-<p>Welcome to the home page!</p>
-<p>Here you can find various resources and information.</p>
 
-<h1>{{name}}</h1>
-<img src="/static/Pro1.jpg" alt="Image">
+<!-- Animated Background -->
+<div id="animated-bg" class="fixed inset-0 -z-10"></div>
 
-<from action="" method="post"><br>
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name"><br>
-    <label for="email">Email:</label><br>   
-    <input type="email" id="email" name="email"><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br>
-    <input type="submit" value="Submit">
-</from>
+<!-- HERO SECTION -->
+<section class="relative min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 overflow-hidden">
+  <!-- Fixed Sign In/Sign Up Buttons -->
+  <div class="fixed top-6 right-6 z-50 flex items-center space-x-4">
+    {% if session.get('user_id') %}
+    <a href="/logout" class="group relative px-6 py-2.5 text-white font-medium text-sm rounded-xl overflow-hidden transition-all duration-300 border border-white/20 hover:border-white/40">
+      <span class="relative z-10 flex items-center">
+        <i class="fas fa-sign-out-alt mr-2 text-red-400 group-hover:text-red-300 transition-colors"></i>
+        Logout
+      </span>
+      <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></div>
+    </a>
+    {% else %}
+    <a href="/login" class="group relative px-6 py-2.5 text-white font-medium text-sm rounded-xl overflow-hidden transition-all duration-300 border border-white/20 hover:border-white/40">
+      <span class="relative z-10 flex items-center">
+        <i class="fas fa-user-circle mr-2 text-blue-400 group-hover:text-blue-300 transition-colors"></i>
+        Sign In
+      </span>
+      <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></div>
+    </a>
+    <a href="/register" class="group relative px-8 py-2.5 bg-white text-blue-600 font-medium text-sm rounded-xl overflow-hidden hover:shadow-lg hover:shadow-white/25 transition-all duration-300">
+      <span class="relative z-10 flex items-center">
+        <i class="fas fa-user-plus mr-2 group-hover:rotate-12 transition-transform duration-300"></i>
+        Sign Up
+        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+      </span>
+      <div class="absolute inset-0 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    </a>
+    {% endif %}
+  </div>
 
-{%endblock %}
+  <!-- Animated background elements -->
+  <div class="absolute inset-0">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-20"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-blue-900/90 to-indigo-900/90"></div>
+    <!-- Animated shapes -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+      <!-- Animated particles -->
+      <div class="particles-container"></div>
+      <!-- Gradient orbs -->
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+    </div>
+  </div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 min-h-screen flex items-center">
+    <div class="container mx-auto px-4 py-20">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Left Column - Text Content -->
+        <div class="text-white space-y-8">
+          
+
+          <h1 class="text-6xl md:text-8xl font-black leading-tight animate-fade-in">
+            Transform Your 
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-lime-400 to-pink-400 animate-gradient">Career</span>
+            <br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">With Smart Analytics</span>
+          </h1>
+
+          <p class="text-xl md:text-2xl text-gray-300 leading-relaxed animate-fade-in-delay max-w-2xl">
+            Unlock your professional potential with 
+            <span class="text-lime-400 font-semibold">data-driven insights</span> and 
+            <span class="text-blue-400 font-semibold">personalized recommendations</span> 
+            powered by AI.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-6 animate-fade-in-delay-2">
+            <a href="/job_analysis" class="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl font-bold text-lg overflow-hidden">
+              <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div class="relative flex items-center justify-center text-white">
+                <i class="fas fa-chart-line mr-3 group-hover:rotate-12 transition-transform text-white"></i>
+                Get Started
+              </div>
+            </a>
+            <a href="/recommend" class="group px-8 py-4 bg-white/10 backdrop-blur-lg rounded-xl font-bold text-lg hover:bg-white/20 transition-all border border-white/10 text-white">
+              <div class="flex items-center justify-center">
+                <i class="fas fa-play-circle mr-3 text-lime-400 text-white"></i>
+                Get Recommendation
+              </div>
+            </a>
+          </div>
+
+          
+        </div>
+
+        <!-- Right Column - 3D Card -->
+        <div class="relative hidden lg:block">
+          <div class="relative w-full aspect-square max-w-lg mx-auto">
+            <!-- Main Card -->
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 backdrop-blur-xl rounded-2xl border border-white/10 transform rotate-6 transition-transform hover:rotate-0">
+              <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-2xl"></div>
+              <div class="absolute inset-0 p-8">
+                <div class="h-full flex flex-col">
+                  <div class="flex items-center justify-between mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                      <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                    <div class="text-white/80 text-sm">Live Analytics</div>
+                  </div>
+                  <div class="flex-1 bg-white/5 rounded-xl p-4">
+                    <canvas id="heroChart" height="200"></canvas>
+                  </div>
+                  <div class="mt-6 grid grid-cols-2 gap-4">
+                    <div class="bg-white/5 rounded-xl p-4">
+                      <div class="text-white/60 text-sm">Applications</div>
+                      <div class="text-white text-2xl font-bold mt-1">245</div>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-4">
+                      <div class="text-white/60 text-sm">Success Rate</div>
+                      <div class="text-white text-2xl font-bold mt-1">98%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Decorative Elements -->
+            <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-lime-500/20 to-lime-600/20 rounded-full blur-xl"></div>
+            <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-pink-500/20 to-pink-600/20 rounded-full blur-xl"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trusted By Section -->
+      
+    </div>
+  </div>
+
+  <!-- Animated wave -->
+  <div class="absolute bottom-0 left-0 w-full">
+    <svg class="w-full h-32 text-white" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="py-24 bg-gradient-to-br from-gray-50 to-gray-100" id="features">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">Why Choose <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-lime-600">LinkSolve</span>?</h2>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 transform group">
+        <div class="mb-6 bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl w-16 h-16 flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20l9-5-9-5-9 5 9 5z M12 12V4l9 5-9 5-9-5 9-5z"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold mb-4 text-gray-800">Smart Job Recommendations</h3>
+        <p class="text-gray-600 leading-relaxed">Personalized job suggestions powered by advanced analytics and your unique profile.</p>
+      </div>
+      
+      <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 transform group">
+        <div class="mb-6 bg-gradient-to-br from-lime-500 to-lime-600 p-4 rounded-xl w-16 h-16 flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold mb-4 text-gray-800">Live Analytics</h3>
+        <p class="text-gray-600 leading-relaxed">Track your job search, applications, and network growth in real time.</p>
+      </div>
+      
+      <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 transform group">
+        <div class="mb-6 bg-gradient-to-br from-pink-500 to-pink-600 p-4 rounded-xl w-16 h-16 flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 0 0-3-3.87 M9 20H4v-2a4 4 0 0 1 3-3.87 M12 7a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold mb-4 text-gray-800">Professional Networking</h3>
+        <p class="text-gray-600 leading-relaxed">Expand your network and connect with top recruiters and professionals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE ANALYTICS SECTION -->
+<section class="py-24 bg-gradient-to-br from-blue-900 to-indigo-900 text-white relative overflow-hidden" id="analytics">
+  <!-- Animated background elements -->
+  <div class="absolute inset-0">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/90 to-indigo-900/90"></div>
+    <!-- Animated shapes -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <!-- Animated particles -->
+      <div class="particles-container"></div>
+      <!-- Gradient orbs -->
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-16">Your Analytics Dashboard</h2>
+    <div class="flex flex-col md:flex-row gap-12 items-center justify-center">
+      <div class="w-full md:w-1/2 bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl">
+        <canvas id="analyticsChart" height="300"></canvas>
+      </div>
+      <div class="w-full md:w-1/2 grid grid-cols-2 gap-6">
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl transform hover:scale-105 transition-all duration-300">
+          <div class="text-5xl font-bold text-blue-400 counter" data-count="87">0</div>
+          <div class="text-gray-300 text-lg mt-2">Avg. Applications/Day</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl transform hover:scale-105 transition-all duration-300">
+          <div class="text-5xl font-bold text-lime-400 counter" data-count="245">0</div>
+          <div class="text-gray-300 text-lg mt-2">Active Recruiters</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl transform hover:scale-105 transition-all duration-300">
+          <div class="text-5xl font-bold text-pink-400 counter" data-count="4300">0</div>
+          <div class="text-gray-300 text-lg mt-2">Total Users</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl transform hover:scale-105 transition-all duration-300">
+          <div class="text-5xl font-bold text-yellow-400 counter" data-count="99">0</div>
+          <div class="text-gray-300 text-lg mt-2">Success Rate (%)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS SECTION -->
+<section class="py-24 bg-white" id="how-it-works">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">How It Works</h2>
+    <ol class="relative border-l-4 border-blue-200">
+      <li class="mb-16 ml-6">
+        <span class="absolute flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full -left-6 ring-4 ring-white text-white text-xl font-bold shadow-lg">1</span>
+        <h3 class="text-2xl font-semibold mb-3 text-gray-800">Sign Up & Create Profile</h3>
+        <p class="text-gray-600 leading-relaxed">Register and set up your professional profile in minutes.</p>
+      </li>
+      <li class="mb-16 ml-6">
+        <span class="absolute flex items-center justify-center w-12 h-12 bg-gradient-to-br from-lime-500 to-lime-600 rounded-full -left-6 ring-4 ring-white text-white text-xl font-bold shadow-lg">2</span>
+        <h3 class="text-2xl font-semibold mb-3 text-gray-800">Get Recommendations</h3>
+        <p class="text-gray-600 leading-relaxed">Receive personalized job suggestions and networking opportunities.</p>
+      </li>
+      <li class="mb-16 ml-6">
+        <span class="absolute flex items-center justify-center w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-full -left-6 ring-4 ring-white text-white text-xl font-bold shadow-lg">3</span>
+        <h3 class="text-2xl font-semibold mb-3 text-gray-800">Track & Analyze</h3>
+        <p class="text-gray-600 leading-relaxed">Monitor your applications and get actionable analytics.</p>
+      </li>
+      <li class="ml-6">
+        <span class="absolute flex items-center justify-center w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full -left-6 ring-4 ring-white text-white text-xl font-bold shadow-lg">4</span>
+        <h3 class="text-2xl font-semibold mb-3 text-gray-800">Connect & Grow</h3>
+        <p class="text-gray-600 leading-relaxed">Network with professionals and recruiters to boost your career.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="py-24 bg-gradient-to-br from-gray-50 to-gray-100" id="testimonials">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">What Our Users Say</h2>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide p-10 bg-white rounded-2xl shadow-xl">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">AS</div>
+            <div class="ml-4">
+              <div class="font-semibold text-xl text-gray-800">Amit S.</div>
+              <div class="text-gray-500">Software Engineer</div>
+            </div>
+          </div>
+          <p class="text-gray-600 text-lg leading-relaxed">"LinkSolve helped me land my dream job in just 2 weeks! The analytics dashboard is a game changer."</p>
+        </div>
+        <div class="swiper-slide p-10 bg-white rounded-2xl shadow-xl">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-gradient-to-br from-lime-500 to-lime-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">PK</div>
+            <div class="ml-4">
+              <div class="font-semibold text-xl text-gray-800">Priya K.</div>
+              <div class="text-gray-500">Product Manager</div>
+            </div>
+          </div>
+          <p class="text-gray-600 text-lg leading-relaxed">"The networking features are so intuitive and the live data keeps me motivated."</p>
+        </div>
+        <div class="swiper-slide p-10 bg-white rounded-2xl shadow-xl">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">RM</div>
+            <div class="ml-4">
+              <div class="font-semibold text-xl text-gray-800">Rahul M.</div>
+              <div class="text-gray-500">Data Analyst</div>
+            </div>
+          </div>
+          <p class="text-gray-600 text-lg leading-relaxed">"I love the clean design and the interactive analytics. Highly recommended!"</p>
+        </div>
+      </div>
+      <div class="swiper-pagination mt-10"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="py-24 bg-gradient-to-br from-blue-900 to-indigo-900 text-white relative overflow-hidden" id="faq">
+  <!-- Animated background elements -->
+  <div class="absolute inset-0">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/90 to-indigo-900/90"></div>
+    <!-- Animated shapes -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <!-- Animated particles -->
+      <div class="particles-container"></div>
+      <!-- Gradient orbs -->
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+    </div>
+  </div>
+
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-16">Frequently Asked Questions</h2>
+    <div class="space-y-6" id="faq-accordion">
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 cursor-pointer transform hover:scale-105 transition-all duration-300">
+        <div class="flex justify-between items-center">
+          <span class="text-xl font-semibold">How does LinkSolve recommend jobs?</span>
+          <span class="faq-toggle text-2xl transform transition-transform duration-300">+</span>
+        </div>
+        <div class="faq-content mt-4 text-gray-300 hidden">We use AI and your profile data to match you with the most relevant job postings in real time.</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 cursor-pointer transform hover:scale-105 transition-all duration-300">
+        <div class="flex justify-between items-center">
+          <span class="text-xl font-semibold">Is my data secure?</span>
+          <span class="faq-toggle text-2xl transform transition-transform duration-300">+</span>
+        </div>
+        <div class="faq-content mt-4 text-gray-300 hidden">Absolutely! We use industry-standard encryption and never share your data without your consent.</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 cursor-pointer transform hover:scale-105 transition-all duration-300">
+        <div class="flex justify-between items-center">
+          <span class="text-xl font-semibold">Can I track my application status?</span>
+          <span class="faq-toggle text-2xl transform transition-transform duration-300">+</span>
+        </div>
+        <div class="faq-content mt-4 text-gray-300 hidden">Yes, you can monitor all your job applications and receive instant updates on their status.</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 cursor-pointer transform hover:scale-105 transition-all duration-300">
+        <div class="flex justify-between items-center">
+          <span class="text-xl font-semibold">How do I contact support?</span>
+          <span class="faq-toggle text-2xl transform transition-transform duration-300">+</span>
+        </div>
+        <div class="faq-content mt-4 text-gray-300 hidden">You can reach us anytime via the support chat or email. We're here 24/7!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white py-12">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="space-y-4">
+        <span class="text-2xl font-bold">LinkSolve</span>
+        <p class="text-gray-400">Empowering careers with data-driven insights.</p>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Analytics</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Recommendations</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Resources</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">API Docs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Connect With Us</h3>
+        <div class="flex space-x-4">
+          <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+      <p>&copy; {{ year }} LinkSolve. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+/* Custom Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+.animate-fade-in-delay {
+  animation: fadeIn 1s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 1s ease-out 0.6s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-3 {
+  animation: fadeIn 1s ease-out 0.9s forwards;
+  opacity: 0;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+/* Enhanced Animated Shapes */
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.3;
+  animation: float 20s infinite;
+}
+
+.shape-1 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(45deg, #60a5fa, #3b82f6);
+  top: -150px;
+  right: -150px;
+  animation-delay: 0s;
+}
+
+.shape-2 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(45deg, #34d399, #10b981);
+  bottom: -200px;
+  left: -200px;
+  animation-delay: -5s;
+}
+
+.shape-3 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(45deg, #f472b6, #ec4899);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -10s;
+}
+
+.shape-4 {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  top: 20%;
+  right: 10%;
+  animation-delay: -7s;
+}
+
+.shape-5 {
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(45deg, #8b5cf6, #6d28d9);
+  bottom: 10%;
+  right: 20%;
+  animation-delay: -12s;
+}
+
+/* Gradient Orbs */
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.15;
+  animation: pulse 8s infinite;
+}
+
+.orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #60a5fa, transparent 70%);
+  top: -250px;
+  right: -250px;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #34d399, transparent 70%);
+  bottom: -300px;
+  left: -300px;
+  animation-delay: -2s;
+}
+
+.orb-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #f472b6, transparent 70%);
+  top: 30%;
+  left: 30%;
+  animation-delay: -4s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(50px, 50px) rotate(120deg);
+  }
+  66% {
+    transform: translate(-50px, 100px) rotate(240deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.15; }
+  50% { transform: scale(1.5); opacity: 0.1; }
+  100% { transform: scale(1); opacity: 0.15; }
+}
+
+/* Particles Animation */
+.particles-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: particle-float 15s infinite linear;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-100px) translateX(100px);
+  }
+  50% {
+    transform: translateY(-200px) translateX(0);
+  }
+  75% {
+    transform: translateY(-100px) translateX(-100px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+/* Add these styles to your existing styles */
+.bg-size-200 {
+  background-size: 200% 200%;
+}
+
+.bg-pos-0 {
+  background-position: 0% 0%;
+}
+
+.bg-pos-100 {
+  background-position: 100% 100%;
+}
+</style>
+{% endblock %}
+
+{% block js %}
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Swiper.js CDN for testimonials carousel -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script>
+// Animated Counters
+function animateCounters() {
+  document.querySelectorAll('.counter').forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-count');
+      const count = +counter.innerText;
+      const increment = Math.ceil(target / 100);
+      if(count < target) {
+        counter.innerText = count + increment;
+        setTimeout(updateCount, 20);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCount();
+  });
+}
+
+// Chart.js Analytics Chart
+function renderAnalyticsChart() {
+  const ctx = document.getElementById('analyticsChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'Applications',
+        data: [120, 190, 300, 250, 220, 310, 400],
+        borderColor: '#60a5fa',
+        backgroundColor: 'rgba(96, 165, 250, 0.1)',
+        tension: 0.4,
+        fill: true,
+        pointRadius: 6,
+        pointBackgroundColor: '#a3e635',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: 'rgba(255, 255, 255, 0.1)'
+          },
+          ticks: {
+            color: '#fff'
+          }
+        },
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            color: '#fff'
+          }
+        }
+      }
+    }
+  });
+}
+
+// Hero Chart
+function renderHeroChart() {
+  const ctx = document.getElementById('heroChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [{
+        label: 'Applications',
+        data: [65, 78, 90, 85, 95, 110],
+        borderColor: '#60a5fa',
+        backgroundColor: 'rgba(96, 165, 250, 0.1)',
+        tension: 0.4,
+        fill: true,
+        pointRadius: 4,
+        pointBackgroundColor: '#a3e635',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: 'rgba(255, 255, 255, 0.1)'
+          },
+          ticks: {
+            color: '#fff'
+          }
+        },
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            color: '#fff'
+          }
+        }
+      }
+    }
+  });
+}
+
+// Swiper.js Testimonials
+function initSwiper() {
+  new Swiper('.swiper-container', {
+    loop: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+      dynamicBullets: true
+    },
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    coverflowEffect: {
+      rotate: 0,
+      stretch: 0,
+      depth: 100,
+      modifier: 2,
+      slideShadows: false
+    }
+  });
+}
+
+// FAQ Accordion
+function initFAQAccordion() {
+  document.querySelectorAll('#faq-accordion > div').forEach(item => {
+    item.addEventListener('click', function() {
+      const content = this.querySelector('.faq-content');
+      const toggle = this.querySelector('.faq-toggle');
+      
+      if(content.classList.contains('hidden')) {
+        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-toggle').forEach(t => {
+          t.innerText = '+';
+          t.classList.remove('rotate-45');
+        });
+        content.classList.remove('hidden');
+        toggle.innerText = '×';
+        toggle.classList.add('rotate-45');
+      } else {
+        content.classList.add('hidden');
+        toggle.innerText = '+';
+        toggle.classList.remove('rotate-45');
+      }
+    });
+  });
+}
+
+// Animated Background
+function animatedBackground() {
+  const bg = document.getElementById('animated-bg');
+  if(!bg) return;
+  
+  bg.innerHTML = '';
+  for(let i=0; i<30; i++) {
+    const node = document.createElement('div');
+    node.className = 'absolute rounded-full bg-blue-200 opacity-40';
+    node.style.width = node.style.height = `${Math.random()*30+20}px`;
+    node.style.left = `${Math.random()*100}%`;
+    node.style.top = `${Math.random()*100}%`;
+    node.style.transition = 'all 10s linear';
+    bg.appendChild(node);
+    
+    setTimeout(() => {
+      node.style.left = `${Math.random()*100}%`;
+      node.style.top = `${Math.random()*100}%`;
+    }, 100);
+  }
+}
+
+// Create particles
+function createParticles() {
+  const containers = document.querySelectorAll('.particles-container');
+  containers.forEach(container => {
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.width = `${Math.random() * 4 + 2}px`;
+      particle.style.height = particle.style.width;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.animationDelay = `${Math.random() * 15}s`;
+      particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+      container.appendChild(particle);
+    }
+  });
+}
+
+// Initialize all components
+document.addEventListener('DOMContentLoaded', function() {
+  animateCounters();
+  renderAnalyticsChart();
+  renderHeroChart();
+  initSwiper();
+  initFAQAccordion();
+  animatedBackground();
+  createParticles();
+});
+
+// Mobile Menu Toggle
+document.getElementById('mobile-menu-button').addEventListener('click', function() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileMenu.classList.toggle('hidden');
+});
+
+// Smooth Scroll for Navigation Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      // Close mobile menu if open
+      document.getElementById('mobile-menu').classList.add('hidden');
+    }
+  });
+});
+
+// Navbar Scroll Effect
+window.addEventListener('scroll', function() {
+  const navbar = document.querySelector('nav');
+  if (window.scrollY > 50) {
+    navbar.classList.add('shadow-lg');
+  } else {
+    navbar.classList.remove('shadow-lg');
+  }
+});
+</script>
+{% endblock %}

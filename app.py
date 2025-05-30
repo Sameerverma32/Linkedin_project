@@ -88,7 +88,7 @@ def experience_vs_industries():
     return graph13_html
 
 def industries_by_posts():
-    fig = px.bar(df, x='Industries', title='Top Industries by Job Posts')
+    fig = px.bar(df.head(10), x='Industries', title='Top 10 Industries by Job Posts')
     graph14_html = pio.to_html(fig, full_html=False)
     return graph14_html
 
@@ -98,12 +98,12 @@ def experience_by_industries():
     return graph15_html
 
 def job_distribution_by_experience():
-    fig = px.histogram(df, x='Job function', y='months_experience', title='Job Function Distribution by Experience')
+    fig = px.histogram(df.head(20), x='Job function', y='months_experience', title='Job Function Distribution by Experience')
     graph16_html = pio.to_html(fig, full_html=False)
     return graph16_html
 
 def education_by_industries():
-    fig = px.histogram(df, x='Job function', y='months_experience', title='Job Function Distribution by Experience')
+    fig = px.histogram(df, x='Job function', y='Industries', title='Job Function Distribution by Industries')
     graph17_html = pio.to_html(fig, full_html=False)
     return graph17_html
 
@@ -118,7 +118,7 @@ def treemap_of_job_posts():
     return graph19_html
 
 def expreance_by_months():
-    fig = px.histogram(df, x='months_experience', nbins=20, title='Distribution of Experience (Months)')
+    fig = px.histogram(df, x='months_experience', nbins=20, title='Distribution of Experience (Months)', color='Employment type')
     graph20_html = pio.to_html(fig, full_html=False)
     return graph20_html
 

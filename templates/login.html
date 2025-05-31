@@ -14,8 +14,8 @@
 }
 
 body {
-	background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20240105/pngtree-free-vector-linkedin-banner-with-linked-technology-and-gradient-texture-image_13913255.png') no-repeat center center fixed;
-	background-color: antiquewhite;
+	background: linear-gradient(to bottom right, #1e3a8a, #1e40af, #3b82f6);
+	background-color: #1e3a8a;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -54,9 +54,8 @@ a {
 }
 
 button {
-	border-radius: 20px;
-	border: 1px solid #FF4B2B;
-	background-color: #FF4B2B;
+	border-radius: 20px;	border: 1px solid #3b82f6;
+	background-color: #3b82f6;
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -98,11 +97,10 @@ input {
 	width: 100%;
 }
 
-.container {
-	background-color: navajowhite;
+.container {	background-color: rgba(30, 58, 138, 0.1);
 	border-radius: 10px;
-  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-			0 10px 10px rgba(0,0,0,0.22);
+  	box-shadow: 0 14px 28px rgba(30, 58, 138, 0.25), 
+			0 10px 10px rgba(59, 130, 246, 0.22);
 	position: relative;
 	overflow: hidden;
 	width: 768px;
@@ -168,10 +166,9 @@ input {
 	transform: translateX(-100%);
 }
 
-.overlay {
-	background: #FF416C;
-	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-	background: linear-gradient(to right, #FF4B2B, #FF416C);
+.overlay {	background: #1e3a8a;
+	background: -webkit-linear-gradient(to right, #1e40af, #3b82f6);
+	background: linear-gradient(to right, #1e40af, #3b82f6);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -259,14 +256,73 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
+
+.flash-messages {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        color: #1e3a8a;
+    }
+
+    .flash-error {
+        color: #dc2626;
+    }
+
+    .user-section {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px 20px;
+        border-radius: 30px;
+        backdrop-filter: blur(10px);
+    }
+    .user-section span {
+        color: white;
+        font-size: 14px;
+    }
+    .logout-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 8px 20px;
+        border-radius: 20px;
+        color: white;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
     </style>
 </head>
 <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+    {% if current_user.is_authenticated %}
+    <div class="user-section">
+        <span>Welcome, {{ current_user.name }}!</span>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+    {% endif %}
 	<image src('https://png.pngtree.com/thumb_back/fh260/background/20240105/pngtree-free-vector-linkedin-banner-with-linked-technology-and-gradient-texture-image_13913255.png') no-repeat center center fixed;>
     <h2>Sign in/up Form</h2>
 <div class="container" id="container">
-	<div class="form-container sign-up-container">
-		<form action="#">
+	<div class="form-container sign-up-container">		<form action="{{ url_for('signup') }}" method="POST">
 			<h1>Create Account</h1>
 			<div class="social-container">
 				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -274,14 +330,13 @@ footer a {
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<button>Sign Up</button>
+			<input type="text" name="name" placeholder="Name" required />
+			<input type="email" name="email" placeholder="Email" required />
+			<input type="password" name="password" placeholder="Password" required />
+			<button type="submit">Sign Up</button>
 		</form>
 	</div>
-	<div class="form-container sign-in-container">
-		<form action="#">
+	<div class="form-container sign-in-container">		<form action="{{ url_for('login') }}" method="POST">
 			<h1>Sign in</h1>
 			<div class="social-container">
 				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -289,10 +344,10 @@ footer a {
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your account</span>
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
+			<input type="email" name="email" placeholder="Email" required />
+			<input type="password" name="password" placeholder="Password" required />
 			<a href="#">Forgot your password?</a>
-			<button>Sign In</button>
+			<button type="submit">Sign In</button>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -310,10 +365,7 @@ footer a {
 		</div>
 	</div>
 </div>
-	<footer>
-		<p>&copy; 2025 Linkedin_project</p>
-		<p>Created with <i class="fa fa-heart"></i> by <a href="#">Sameer verma</a></p>
-	</footer>
+	
 </body>
 <script>
     const signUpButton = document.getElementById('signUp');

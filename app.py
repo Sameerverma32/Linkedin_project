@@ -1,17 +1,86 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for, session
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session, flash
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
-
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your-secret-key-here'  # Change this to a secure secret key
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    email = db.Column(db.String(120), unique=True)
+    password_hash = db.Column(db.String(200))
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# Create all database tables
+with app.app_context():
+    db.create_all()
 
 df = pd.read_csv('Linkedindataset_new.csv')
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+        
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user = User.query.filter_by(email=email).first()
+        
+        if user and user.check_password(password):
+            login_user(user)
+            flash('Successfully logged in!', 'success')
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('index'))
+        else:
+            flash('Invalid email or password', 'error')
+            return redirect(url_for('login'))
     return render_template('login.html')
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    name = request.form.get('name')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    
+    if User.query.filter_by(email=email).first():
+        flash('Email already exists')
+        return redirect(url_for('login'))
+    
+    user = User(name=name, email=email)
+    user.set_password(password)
+    db.session.add(user)
+    db.session.commit()
+    
+    login_user(user)
+    return redirect(url_for('index'))
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Successfully logged out!', 'success')
+    return redirect(url_for('login'))
 
 @app.route('/')
 def index():
@@ -164,16 +233,17 @@ def location_by_seniority():
 
 #analysis pages 
 @app.route('/job_analysis')
+@login_required
 def job_analysis():
-    graph1_html = emplyment_types()
-    graph2_html = seniority_levels()
-    graph3_html = experiencevsseniority()
-    graph4_html = job_titles()
-    graph5_html = senioritybyemployment()
-    return render_template('job_analysis.html', graph1_html=graph1_html, graph2_html=graph2_html, graph3_html=graph3_html, graph4_html=graph4_html, graph5_html=graph5_html)
-
+    graph1 = emplyment_types()
+    graph2 = seniority_levels()
+    graph3 = experiencevsseniority()
+    graph4 = job_titles()
+    graph5 = senioritybyemployment()
+    return render_template('job_analysis.html', graph1_html=graph1, graph2_html=graph2, graph3_html=graph3,graph4_html=graph4,graph5_html=graph5)
 
 @app.route('/education_analysis')
+@login_required
 def education_analysis():
     graph6_html = education_levels()
     graph7_html = common_eductaion()
@@ -185,6 +255,7 @@ def education_analysis():
 
 
 @app.route('/industry_analysis')
+@login_required
 def industry_analysis():
     graph12_html = seniority_breakdown()
     graph13_html = experience_vs_industries()
@@ -205,7 +276,7 @@ def industry_analysis():
     graph28_html = location_by_seniority()
     return render_template('industry_analysis.html', graph12_html=graph12_html, graph13_html=graph13_html, graph14_html=graph14_html, graph15_html=graph15_html, graph16_html=graph16_html, graph17_html=graph17_html, graph18_html=graph18_html, graph19_html=graph19_html, graph20_html=graph20_html, graph21_html=graph21_html, graph22_html=graph22_html, graph23_html=graph23_html, graph24_html=graph24_html, graph25_html=graph25_html, graph26_html=graph26_html, graph27_html=graph27_html, graph28_html=graph28_html)
 
-    
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,29 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: lightblue;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #666;
-        }
-    </style>
+<title>About Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
 </head>
-<body>
-    <h1>About Us</h1>
-    <p>Welcome to the about page!</p>
-    <p>I’m a data analyst passionate about turning raw data into actionable insights that drive smarter business decisions. With experience in [industry or domain – e.g., finance, healthcare, marketing], I specialize in using data to uncover trends, identify opportunities, and solve real-world problems.I’m skilled in tools like SQL, Excel, Python, Power BI, Tableau, and R, and I’m comfortable working across large datasets to produce clear, meaningful dashboards and reports. Whether it’s forecasting revenue, analyzing customer behavior, or streamlining operations, I believe data is the key to impactful decision-making.
-I thrive in collaborative environments, enjoy simplifying complex concepts for stakeholders, and continuously seek to grow through new challenges and technologies.
-Currently open to new opportunities in data analytics or business intelligence. Let’s connect if you’re hiring, collaborating, or just love talking data!</p>
+<body class="w3-light-grey">
+
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="relative min-h-[40vh] bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 overflow-hidden">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-blue-900/90 to-indigo-900/90"></div>
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="particles-container"></div>
+        </div>
+    </div>
+
+    <!-- Header Content -->
+    <div class="relative z-10 container mx-auto px-4 py-20 text-center">
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">About LinkSolve</h1>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+            Empowering careers through data-driven insights and intelligent analytics
+        </p>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-7xl">
+        <!-- Vision Section -->
+        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+            <div class="space-y-6">
+                <h2 class="text-3xl font-bold text-gray-800">Our Vision</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    At LinkSolve, we're revolutionizing the way professionals approach their career development. 
+                    By combining advanced analytics with real-world insights, we provide actionable intelligence 
+                    that helps you make informed decisions about your career path.
+                </p>
+                <div class="flex gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                        <h3 class="text-lg font-semibold text-blue-800">Data-Driven</h3>
+                        <p class="text-gray-600">Making decisions backed by real analytics</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                        <h3 class="text-lg font-semibold text-blue-800">AI-Powered</h3>
+                        <p class="text-gray-600">Leveraging cutting-edge technology</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="bg-gradient-to-br from-blue-500/20 to-indigo-500/20 backdrop-blur-xl rounded-2xl border border-white/10 p-8 transform hover:scale-105 transition-all duration-300">
+                    <img src="/static/img111.jpg" alt="Analytics Dashboard" class="rounded-lg shadow-xl">
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="mb-20">
+            <h2 class="text-3xl font-bold text-gray-800 text-center mb-12">What We Offer</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Job Market Analysis</h3>
+                    <p class="text-gray-600">Real-time insights into industry trends and job market demands</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-12 h-12 bg-gradient-to-br from-lime-500 to-lime-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Education Insights</h3>
+                    <p class="text-gray-600">Understanding the impact of education on career growth</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-industry text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Industry Analytics</h3>
+                    <p class="text-gray-600">Deep dive into specific industry trends and requirements</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-12">Meet Our Team</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-white text-2xl font-bold">SV</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800">Sameer Verma</h3>
+                    <p class="text-gray-600">Founder & Lead Developer</p>
+                </div>
+                <!-- Add more team members as needed -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-20 bg-gradient-to-br from-blue-900 to-indigo-900 relative overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="particles-container"></div>
+    </div>
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-4xl font-bold text-white mb-8">Ready to Transform Your Career?</h2>
+        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Join thousands of professionals who are already using LinkSolve to make data-driven career decisions.
+        </p>
+        <a href="{{ url_for('job_analysis') }}" class="inline-block px-8 py-4 bg-white text-blue-900 rounded-xl font-bold text-lg hover:bg-blue-50 transition-colors">
+            Get Started Now
+        </a>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block css %}
+<style>
+/* Add any custom styles here */
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.3;
+    animation: float 20s infinite;
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(45deg, #60a5fa, #3b82f6);
+    top: -150px;
+    right: -150px;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(45deg, #34d399, #10b981);
+    bottom: -200px;
+    left: -200px;
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(50px, 50px) rotate(120deg); }
+    66% { transform: translate(-50px, 100px) rotate(240deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+</style>
+{% endblock %}
+<!-- END w3-content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
+  <button class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Previous</button>
+  <button class="w3-button w3-black w3-padding-large w3-margin-bottom">Next »</button>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
 </body>
 </html>

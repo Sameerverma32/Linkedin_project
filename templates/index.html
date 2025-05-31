@@ -10,7 +10,7 @@
 <section class="relative min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 overflow-hidden">
   <!-- Fixed Sign In/Sign Up Buttons -->
   <div class="fixed top-6 right-6 z-50 flex items-center space-x-4">
-    {% if session.get('user_id') %}
+    {% if current_user.is_authenticated %}
     <a href="/logout" class="group relative px-6 py-2.5 text-white font-medium text-sm rounded-xl overflow-hidden transition-all duration-300 border border-white/20 hover:border-white/40">
       <span class="relative z-10 flex items-center">
         <i class="fas fa-sign-out-alt mr-2 text-red-400 group-hover:text-red-300 transition-colors"></i>
@@ -27,14 +27,6 @@
       </span>
       <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></div>
-    </a>
-    <a href="/register" class="group relative px-8 py-2.5 bg-white text-blue-600 font-medium text-sm rounded-xl overflow-hidden hover:shadow-lg hover:shadow-white/25 transition-all duration-300">
-      <span class="relative z-10 flex items-center">
-        <i class="fas fa-user-plus mr-2 group-hover:rotate-12 transition-transform duration-300"></i>
-        Sign Up
-        <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
-      </span>
-      <div class="absolute inset-0 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </a>
     {% endif %}
   </div>
@@ -89,10 +81,10 @@
                 Get Started
               </div>
             </a>
-            <a href="/recommend" class="group px-8 py-4 bg-white/10 backdrop-blur-lg rounded-xl font-bold text-lg hover:bg-white/20 transition-all border border-white/10 text-white">
+            <a href="/about" class="group px-8 py-4 bg-white/10 backdrop-blur-lg rounded-xl font-bold text-lg hover:bg-white/20 transition-all border border-white/10 text-white">
               <div class="flex items-center justify-center">
                 <i class="fas fa-play-circle mr-3 text-lime-400 text-white"></i>
-                Get Recommendation
+                About Us
               </div>
             </a>
           </div>

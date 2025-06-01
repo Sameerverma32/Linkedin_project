@@ -107,12 +107,12 @@ def experiencevsseniority():
     return graph3_html
 
 def job_titles():
-    fig = px.bar(df, x='company', y='title', title='Most Common Job Titles')
+    fig = px.bar(df.head(10), x='company', y='title', title='Most Common Job Titles')
     graph4_html = pio.to_html(fig, full_html=False)
     return graph4_html
 
 def senioritybyemployment():
-    fig = px.histogram(df, x='Seniority level', y='Employment type', title='Seniority Level by Employment Type', color='Employment type')
+    fig = px.box(df.head(20), x='Seniority level', y='Employment type', title='Seniority Level by Employment Type')
     graph5_html = pio.to_html(fig, full_html=False)
     return graph5_html
 
@@ -122,12 +122,12 @@ def education_levels():
     return graph6_html
 
 def common_eductaion():
-    fig = px.bar(df, x='education', y='description',title='Top Most Common Education Requirements', color='Industries')
+    fig = px.bar(df, x='education', y='description',title='Top Most Common Education across Industry', color='Industries')
     graph7_html = pio.to_html(fig, full_html=False)
     return graph7_html
 
 def education_requirements():
-    fig = px.box(df, x='education', y='company',title='Distribution of education Requirements')
+    fig = px.box(df, x='education', y='company',title='Distribution of Qualification Requirements')
     graph8_html = pio.to_html(fig, full_html=False)
     return graph8_html
 
@@ -137,7 +137,7 @@ def breakdown_by_education():
     return graph9_html
 
 def education_requirement_by_industries():
-    fig = px.bar(df, x='education', y='Industries',title='Education Requirements across Industries', color='education')
+    fig = px.bar(df.head, x='education', y='Industries',title='Education Requirements across Industries', color='education')
     graph10_html = pio.to_html(fig, full_html=False)
     return graph10_html
 
@@ -171,65 +171,55 @@ def job_distribution_by_experience():
     graph16_html = pio.to_html(fig, full_html=False)
     return graph16_html
 
-def education_by_industries():
-    fig = px.histogram(df, x='Job function', y='Industries', title='Job Function Distribution by Industries')
+def Job_Post_Distribution_by_Industry_by_Job_Function_by_Seniority_Level():
+    fig = px.sunburst(df, path=['Industries', 'Job function', 'Seniority level'], values='post_id', title='Job Post Distribution by Industry, Job Function, and Seniority Level')
     graph17_html = pio.to_html(fig, full_html=False)
     return graph17_html
 
-def Job_Post_Distribution_by_Industry_by_Job_Function_by_Seniority_Level():
-    fig = px.sunburst(df, path=['Industries', 'Job function', 'Seniority level'], values='post_id', title='Job Post Distribution by Industry, Job Function, and Seniority Level')
+def treemap_of_job_posts():
+    fig = px.treemap(df, path=['Industries', 'Job function', 'Seniority level'], values='post_id', title='Treemap of Job Posts')
     graph18_html = pio.to_html(fig, full_html=False)
     return graph18_html
 
-def treemap_of_job_posts():
-    fig = px.treemap(df, path=['Industries', 'Job function', 'Seniority level'], values='post_id', title='Treemap of Job Posts')
+def expreance_by_months():
+    fig = px.histogram(df, x='months_experience', nbins=20, title='Distribution of Experience (Months)', color='Employment type')
     graph19_html = pio.to_html(fig, full_html=False)
     return graph19_html
 
-def expreance_by_months():
-    fig = px.histogram(df, x='months_experience', nbins=20, title='Distribution of Experience (Months)', color='Employment type')
+def  education_level_proportion():
+    fig = px.pie(df, names='education', title='Education Level Proportion')
     graph20_html = pio.to_html(fig, full_html=False)
     return graph20_html
 
-def  education_level_proportion():
-    fig = px.pie(df, names='education', title='Education Level Proportion')
-    graph21_html = pio.to_html(fig, full_html=False)
-    return graph21_html
-
 def experience_by_title():
     fig = px.scatter(df, x='months_experience', y='title', title='Experience by Title')
-    graph22_html = pio.to_html(fig, full_html=False)
-    return graph22_html
-
-def function_beakdown_by_industries():
-    fig = px.treemap(df, path=['Job function', 'title', 'education', 'Industries'], title='Industry & Function Breakdown')
-    graph23_html = pio.to_html(fig, full_html=False)
-    return graph23_html
+    graph21_html = pio.to_html(fig, full_html=False)
+    return graph21_html
     
 def experience_by_education():
     fig = px.violin(df, x='education', y='months_experience', box=True, title='Experience by Education')
-    graph24_html = pio.to_html(fig, full_html=False)
-    return graph24_html
+    graph22_html = pio.to_html(fig, full_html=False)
+    return graph22_html
     
 def experience_per_local():
     fig = px.histogram(df, x='months_experience', color='location', title='Experience per Location')
-    graph25_html = pio.to_html(fig, full_html=False)
-    return graph25_html
+    graph23_html = pio.to_html(fig, full_html=False)
+    return graph23_html
     
 def  experience_vs_company(): 
     fig = px.scatter(df, x='months_experience', y='company', title='Experience vs Company')  
-    graph26_html = pio.to_html(fig, full_html=False)
-    return graph26_html
+    graph24_html = pio.to_html(fig, full_html=False)
+    return graph24_html
 
 def experience_by_employment_type():
     fig = px.histogram(df, x='months_experience', color='Employment type', title='Experience by Employment Type')
-    graph27_html = pio.to_html(fig, full_html=False)
-    return graph27_html
+    graph25_html = pio.to_html(fig, full_html=False)
+    return graph25_html
 
 def location_by_seniority():
     fig = px.sunburst(df, path=['location', 'Employment type', 'Seniority level'], title='Sunburst: Location > Employment > Seniority')
-    graph28_html = pio.to_html(fig, full_html=False)
-    return graph28_html
+    graph26_html = pio.to_html(fig, full_html=False)
+    return graph26_html
 
 #analysis pages 
 @app.route('/job_analysis')
@@ -262,19 +252,17 @@ def industry_analysis():
     graph14_html = industries_by_posts()
     graph15_html = experience_by_industries()
     graph16_html = job_distribution_by_experience()
-    graph17_html = education_by_industries()
-    graph18_html = Job_Post_Distribution_by_Industry_by_Job_Function_by_Seniority_Level()
-    graph19_html = treemap_of_job_posts()
-    graph20_html = expreance_by_months()
-    graph21_html = education_level_proportion()
-    graph22_html = experience_by_title()
-    graph23_html = function_beakdown_by_industries()
-    graph24_html = experience_by_education()
-    graph25_html = experience_per_local()
-    graph26_html = experience_vs_company()
-    graph27_html = experience_by_employment_type()
-    graph28_html = location_by_seniority()
-    return render_template('industry_analysis.html', graph12_html=graph12_html, graph13_html=graph13_html, graph14_html=graph14_html, graph15_html=graph15_html, graph16_html=graph16_html, graph17_html=graph17_html, graph18_html=graph18_html, graph19_html=graph19_html, graph20_html=graph20_html, graph21_html=graph21_html, graph22_html=graph22_html, graph23_html=graph23_html, graph24_html=graph24_html, graph25_html=graph25_html, graph26_html=graph26_html, graph27_html=graph27_html, graph28_html=graph28_html)
+    graph17_html = Job_Post_Distribution_by_Industry_by_Job_Function_by_Seniority_Level()
+    graph18_html = treemap_of_job_posts()
+    graph19_html = expreance_by_months()
+    graph20_html = education_level_proportion()
+    graph21_html = experience_by_title()
+    graph22_html = experience_by_education()
+    graph23_html = experience_per_local()
+    graph24_html = experience_vs_company()
+    graph25_html = experience_by_employment_type()
+    graph26_html = location_by_seniority()
+    return render_template('industry_analysis.html', graph12_html=graph12_html, graph13_html=graph13_html, graph14_html=graph14_html, graph15_html=graph15_html, graph16_html=graph16_html, graph17_html=graph17_html, graph18_html=graph18_html, graph19_html=graph19_html, graph20_html=graph20_html, graph21_html=graph21_html, graph22_html=graph22_html, graph23_html=graph23_html, graph24_html=graph24_html, graph25_html=graph25_html, graph26_html=graph26_html)
 
 
 

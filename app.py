@@ -117,7 +117,11 @@ def senioritybyemployment():
     return graph5_html
 
 def education_levels():
-    fig = px.pie(df, names='education', hole=0.4, title='Education Requirements')
+    fig = px.pie(df, 
+                 names='education', 
+                 title='Distribution of Education Requirements',
+                 color_discrete_sequence=px.colors.qualitative.Set3)
+    fig.update_traces(textposition='inside', textinfo='percent+label')
     graph6_html = pio.to_html(fig, full_html=False)
     return graph6_html
 

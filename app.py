@@ -37,6 +37,43 @@ with app.app_context():
 
 df = pd.read_csv('Linkedindataset_new.csv')
 
+# Custom theme for all graphs
+def apply_custom_theme(fig):
+    fig.update_layout(
+        plot_bgcolor='white',
+        paper_bgcolor='white',
+        font=dict(family='Inter, sans-serif', color='#1f2937'),
+        title=dict(
+            font=dict(size=24, color='#1e40af', family='Inter, sans-serif'),
+            x=0.5,
+            xanchor='center'
+        ),
+        margin=dict(t=80, l=60, r=40, b=60),
+        showlegend=True,
+        legend=dict(
+            bgcolor='rgba(255,255,255,0.9)',
+            bordercolor='#e5e7eb',
+            borderwidth=1
+        )
+    )
+    fig.update_xaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='#f3f4f6',
+        showline=True,
+        linewidth=2,
+        linecolor='#e5e7eb'
+    )
+    fig.update_yaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='#f3f4f6',
+        showline=True,
+        linewidth=2,
+        linecolor='#e5e7eb'
+    )
+    return fig
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -120,9 +157,17 @@ def education_levels():
     fig = px.pie(df, 
                  names='education', 
                  title='Distribution of Education Requirements',
-                 color_discrete_sequence=px.colors.qualitative.Set3)
-    fig.update_traces(textposition='inside', textinfo='percent+label')
-    graph6_html = pio.to_html(fig, full_html=False)
+                 color_discrete_sequence=px.colors.qualitative.Set3,
+                 hole=0.4)  # Added donut style
+    fig.update_traces(
+        textposition='inside',
+        textinfo='percent+label',
+        textfont=dict(size=14, family='Inter, sans-serif'),
+        pull=[0.05] * len(df['education'].unique())  # Slight separation between segments
+    )
+    # Apply custom theme
+    fig = apply_custom_theme(fig)
+    graph6_html = pio.to_html(fig, full_html=False, config={'responsive': True})
     return graph6_html
 
 def common_eductaion():
@@ -133,9 +178,20 @@ def common_eductaion():
                  y='count',
                  title='Most Common Education across Industry',
                  color='Industries',
-                 labels={'count': 'Number of Positions'})
-    fig.update_layout(barmode='group')
-    graph7_html = pio.to_html(fig, full_html=False)
+                 labels={'count': 'Number of Positions', 'education': 'Education Level', 'Industries': 'Industry'},
+                 color_discrete_sequence=px.colors.qualitative.Set3)
+    
+    fig.update_layout(
+        barmode='group',
+        bargap=0.2,
+        bargroupgap=0.1
+    )
+    
+    # Apply custom theme
+    fig = apply_custom_theme(fig)
+    fig.update_xaxes(tickangle=45)  # Angle labels for better readability
+    
+    graph7_html = pio.to_html(fig, full_html=False, config={'responsive': True})
     return graph7_html
 
 def education_requirements():
@@ -164,9 +220,26 @@ def education_requirement_by_industries():
                  y='count',
                  color='Industries',
                  title='Education Requirements across Industries',
-                 labels={'count': 'Number of Positions'})
-    fig.update_layout(barmode='stack')
-    graph10_html = pio.to_html(fig, full_html=False)
+                 labels={'count': 'Number of Positions', 'education': 'Education Level', 'Industries': 'Industry'},
+                 color_discrete_sequence=px.colors.qualitative.Set3)
+    
+    fig.update_layout(
+        barmode='stack',
+        showlegend=True,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
+    )
+    
+    # Apply custom theme
+    fig = apply_custom_theme(fig)
+    fig.update_xaxes(tickangle=45)
+    
+    graph10_html = pio.to_html(fig, full_html=False, config={'responsive': True})
     return graph10_html
 
 def education_by_employment():
@@ -177,9 +250,28 @@ def education_by_employment():
                  y='count',
                  color='Employment type',
                  title='Education Requirements by Employment Type',
-                 labels={'count': 'Number of Positions'})
-    fig.update_layout(barmode='group')
-    graph11_html = pio.to_html(fig, full_html=False)
+                 labels={'count': 'Number of Positions', 'education': 'Education Level', 'Employment type': 'Employment Type'},
+                 color_discrete_sequence=px.colors.qualitative.Set3)
+    
+    fig.update_layout(
+        barmode='group',
+        bargap=0.2,
+        bargroupgap=0.1,
+        showlegend=True,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
+    )
+    
+    # Apply custom theme
+    fig = apply_custom_theme(fig)
+    fig.update_xaxes(tickangle=45)
+    
+    graph11_html = pio.to_html(fig, full_html=False, config={'responsive': True})
     return graph11_html
 
 def seniority_breakdown():
@@ -252,10 +344,6 @@ def experience_by_employment_type():
     graph25_html = pio.to_html(fig, full_html=False)
     return graph25_html
 
-def location_by_seniority():
-    fig = px.sunburst(df, path=['location', 'Employment type', 'Seniority level'], title='Sunburst: Location > Employment > Seniority')
-    graph26_html = pio.to_html(fig, full_html=False)
-    return graph26_html
 
 #analysis pages 
 @app.route('/job_analysis')
@@ -313,8 +401,7 @@ def industry_analysis():
     graph23_html = experience_per_local()
     graph24_html = experience_vs_company()
     graph25_html = experience_by_employment_type()
-    graph26_html = location_by_seniority()
-    return render_template('industry_analysis.html', graph12_html=graph12_html, graph13_html=graph13_html, graph14_html=graph14_html, graph15_html=graph15_html, graph16_html=graph16_html, graph17_html=graph17_html, graph18_html=graph18_html, graph19_html=graph19_html, graph20_html=graph20_html, graph21_html=graph21_html, graph22_html=graph22_html, graph23_html=graph23_html, graph24_html=graph24_html, graph25_html=graph25_html, graph26_html=graph26_html)
+    return render_template('industry_analysis.html', graph12_html=graph12_html, graph13_html=graph13_html, graph14_html=graph14_html, graph15_html=graph15_html, graph16_html=graph16_html, graph17_html=graph17_html, graph18_html=graph18_html, graph19_html=graph19_html, graph20_html=graph20_html, graph21_html=graph21_html, graph22_html=graph22_html, graph23_html=graph23_html, graph24_html=graph24_html, graph25_html=graph25_html)
 
 
 

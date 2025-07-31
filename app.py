@@ -126,12 +126,28 @@ def education_levels():
     return graph6_html
 
 def common_eductaion():
-    fig = px.bar(df, x='education', y='description',title='Top Most Common Education across Industry', color='Industries')
+    # Group data by education and Industries to get counts
+    edu_counts = df.groupby(['education', 'Industries']).size().reset_index(name='count')
+    fig = px.bar(edu_counts,
+                 x='education',
+                 y='count',
+                 title='Most Common Education across Industry',
+                 color='Industries',
+                 labels={'count': 'Number of Positions'})
+    fig.update_layout(barmode='group')
     graph7_html = pio.to_html(fig, full_html=False)
     return graph7_html
 
 def education_requirements():
-    fig = px.box(df, x='education', y='company',title='Distribution of Qualification Requirements')
+    # Create a count of education requirements
+    edu_req_counts = df['education'].value_counts().reset_index()
+    edu_req_counts.columns = ['education', 'count']
+    
+    fig = px.bar(edu_req_counts,
+                 x='education',
+                 y='count',
+                 title='Distribution of Qualification Requirements',
+                 labels={'count': 'Number of Positions'})
     graph8_html = pio.to_html(fig, full_html=False)
     return graph8_html
 
@@ -141,12 +157,28 @@ def breakdown_by_education():
     return graph9_html
 
 def education_requirement_by_industries():
-    fig = px.bar(df.head, x='education', y='Industries',title='Education Requirements across Industries', color='education')
+    # Group data by education and Industries to get counts
+    edu_ind_counts = df.groupby(['education', 'Industries']).size().reset_index(name='count')
+    fig = px.bar(edu_ind_counts, 
+                 x='education', 
+                 y='count',
+                 color='Industries',
+                 title='Education Requirements across Industries',
+                 labels={'count': 'Number of Positions'})
+    fig.update_layout(barmode='stack')
     graph10_html = pio.to_html(fig, full_html=False)
     return graph10_html
 
 def education_by_employment():
-    fig = px.bar(df, x='Employment type', y='education', title='Education Requirements by Employment Type')
+    # Group data by education and Employment type to get counts
+    edu_emp_counts = df.groupby(['education', 'Employment type']).size().reset_index(name='count')
+    fig = px.bar(edu_emp_counts, 
+                 x='education', 
+                 y='count',
+                 color='Employment type',
+                 title='Education Requirements by Employment Type',
+                 labels={'count': 'Number of Positions'})
+    fig.update_layout(barmode='group')
     graph11_html = pio.to_html(fig, full_html=False)
     return graph11_html
 
@@ -239,13 +271,29 @@ def job_analysis():
 @app.route('/education_analysis')
 @login_required
 def education_analysis():
+    # Get education counts for metrics
+    education_counts = df['education'].value_counts()
+    total_positions = len(df)
+    avg_experience = df['months_experience'].mean()
+    
+    # Generate graphs
     graph6_html = education_levels()
     graph7_html = common_eductaion()
     graph8_html = education_requirements()
     graph9_html = breakdown_by_education()
     graph10_html = education_requirement_by_industries()
     graph11_html = education_by_employment()
-    return render_template('education_analysis.html', graph6_html=graph6_html, graph7_html=graph7_html, graph8_html=graph8_html, graph9_html=graph9_html, graph10_html=graph10_html, graph11_html=graph11_html)
+    
+    return render_template('education_analysis.html',
+                         education_counts=education_counts,
+                         total_positions=total_positions,
+                         avg_experience=avg_experience,
+                         graph6_html=graph6_html,
+                         graph7_html=graph7_html,
+                         graph8_html=graph8_html,
+                         graph9_html=graph9_html,
+                         graph10_html=graph10_html,
+                         graph11_html=graph11_html)
 
 
 @app.route('/industry_analysis')
